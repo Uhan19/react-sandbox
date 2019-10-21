@@ -13,6 +13,14 @@ const app = props => {
   // useState always returns an array with exactly two elements
   // the first elemen tis the state, and the second is a function that allows
   // us to manipulate the state
+  const style = {
+    backgroundColor: "white",
+    font: "inherit",
+    border: "1px solid blue",
+    padding: "8px",
+    cursor: "pointer"
+  }
+
   const [ personState, setPersonState ] = useState({
     persons: [
       { name: person1, age: 28 },
@@ -22,18 +30,20 @@ const app = props => {
   });
 
   // eslint-disable-next-line
-  const [ touchedState, setTouchedState ] = useState(true)
+  const [ touchedState, setTouchedState ] = useState({ touched: true })
 
-  const switchNameHandler = () => {
+  const [ showPersonState, setShowPersonState ] = useState({ showPerson: false })
+
+  const switchNameHandler = (newName) => {
     if (touchedState) {
       setPersonState({
         persons: [
           { name: YUEHAN, age: 26 },
-          { name: person1, age: 29 },
+          { name: newName, age: 29 },
           { name: KINGA, age: 24}
         ]
       })
-      setTouchedState(false)
+      setTouchedState({ touched: false })
     } else {
       setPersonState({
         persons: [
@@ -42,31 +52,63 @@ const app = props => {
           { name: person3, age: 26}
         ]
       })
-      setTouchedState(true)
+      setTouchedState({ touched: true })
     }
   }
 
-  console.log(personState, touchedState)
+  const nameChangedHandler = (e, index) => {
+    // can also use Object.assign() to create a copy
+    // Object.assign({}, personState.persons[index])
+    const person = {...personState.persons[index]}
+    person.name = e.target.value
+    const persons = [...personState.persons]
+    persons[index] = person
+    setPersonState({ persons: persons})
+  }
+
+  const togglePersonsHandler = () => {
+    showPersonState.showPerson ?
+      setShowPersonState({ showPerson: false })
+      :
+      setShowPersonState({ showPerson: true });
+  }
+
+  const deletePersonHandler = (index) => {
+    const persons = [...personState.persons]
+    persons.splice(index, 1);
+    setPersonState({ persons: persons })
+  }
+
+  const persons = () => {
+    return showPersonState.showPerson && (
+      <div>
+        {
+          personState.persons.map((person, index) => {
+            return (
+              <Person
+                key={index}
+                onClick={() => deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                change={() => nameChangedHandler(event, index)}
+              />)
+          })
+        }
+      </div>
+    )
+  }
 
   return (
     <div className="App">
       <h1>Uhan's React App</h1>
-      <button onClick={switchNameHandler}>Switch Name</button>
-      <Person
-        name={personState.persons[0].name}
-        age={personState.persons[0].age}
-        onClick={switchNameHandler}
+      <button
+        style={style}
+        onClick={() => togglePersonsHandler()}
       >
-        the owner of this site
-      </ Person>
-      <Person
-        name={personState.persons[1].name}
-        age={personState.persons[1].age}
-      />
-      <Person name={personState.persons[2].name} age={personState.persons[2].age}/>
-      <Person />
-      <Person>unknown person</ Person>
-    </div>
+        Toggle Persons
+      </button>
+      {persons()}
+      </div>
   );
   // return React.createElement("div", { className: "App" }, React.createElement("h1", null, "Input Field"), React.createElement("input"))
 }
