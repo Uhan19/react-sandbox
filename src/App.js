@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import Person from "./Person/Person";
+import Characters from "./Characters/characters"
+import { Validation } from "./utils/validation";
 import {
   KINGA,
   YUEHAN,
@@ -36,6 +38,9 @@ const app = props => {
 
   const [ textLengthState, setTextLengthState ] = useState({ textLength: 0 })
 
+  const [ inputTextState, setInputTextState ] = useState({ text: "" });
+
+  // eslint-disable-next-line
   const switchNameHandler = (newName) => {
     if (touchedState) {
       setPersonState({
@@ -82,7 +87,21 @@ const app = props => {
   }
 
   const textLengthHandler = (e) => {
-    setTextLengthState({ textLength: e.target.value.length })
+    setInputTextState({ text: e.target.value });
+    setTextLengthState({ textLength: e.target.value.length });
+  }
+
+  const handleCharDel = (index) => {
+    const text = inputTextState.text;
+    if (!index) {
+      const newText = text.slice(1);
+      setInputTextState({ text: newText});
+      setTextLengthState({ textLength: newText.length });
+    } else {
+      const newText = text.slice(0, index) + text.slice(index+1);
+      setInputTextState({ text: newText });
+      setTextLengthState({ textLength: newText.length });
+    }
   }
 
   const persons = () => {
@@ -108,9 +127,11 @@ const app = props => {
     <div className="App">
       <h1>Uhan's React App</h1>
       <div>
-        <input onChange={() => textLengthHandler(event)}/> 
+        <input onChange={() => textLengthHandler(event)} value={inputTextState.text}/> 
       </div>
       <p>Input field Length: {textLengthState.textLength}</p>
+      <Validation textLength={textLengthState.textLength}/>
+      <Characters text={inputTextState.text} deleteChar={handleCharDel}/>
       <button
         style={style}
         onClick={() => togglePersonsHandler()}
