@@ -47,7 +47,7 @@ const app = props => {
     } else {
       setPersonState({
         persons: [
-          { name: person1, age: 28 },
+          { name: person1, age: 26 },
           { name: person2, age: 29 },
           { name: person3, age: 26}
         ]
