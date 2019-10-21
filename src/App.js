@@ -34,6 +34,8 @@ const app = props => {
 
   const [ showPersonState, setShowPersonState ] = useState({ showPerson: false })
 
+  const [ textLengthState, setTextLengthState ] = useState({ textLength: 0 })
+
   const switchNameHandler = (newName) => {
     if (touchedState) {
       setPersonState({
@@ -79,6 +81,10 @@ const app = props => {
     setPersonState({ persons: persons })
   }
 
+  const textLengthHandler = (e) => {
+    setTextLengthState({ textLength: e.target.value.length })
+  }
+
   const persons = () => {
     return showPersonState.showPerson && (
       <div>
@@ -101,6 +107,10 @@ const app = props => {
   return (
     <div className="App">
       <h1>Uhan's React App</h1>
+      <div>
+        <input onChange={() => textLengthHandler(event)}/> 
+      </div>
+      <p>Input field Length: {textLengthState.textLength}</p>
       <button
         style={style}
         onClick={() => togglePersonsHandler()}
