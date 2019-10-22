@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person";
 import Characters from "./Characters/characters"
 import { Validation } from "./utils/validation";
@@ -21,7 +22,11 @@ const app = props => {
     font: "inherit",
     border: "1px solid blue",
     padding: "8px",
-    cursor: "pointer"
+    cursor: "pointer",
+    ":hover": {
+      backgroundColor: "lightgreen",
+      color: "black"
+    }
   }
 
   const [ personState, setPersonState ] = useState({
@@ -108,6 +113,10 @@ const app = props => {
   const persons = () => {
     if (showPersonState.showPerson) {
       style.backgroundColor = "red";
+      style[":hover"] = {
+        backgroundColor: "salmon",
+        color: "black"
+      }
       return (
         <div>
         {
@@ -128,24 +137,26 @@ const app = props => {
   }
 
   return (
-    <div className="App">
-      <h1>Uhan's React App</h1>
-      <div>
-        <input onChange={() => textLengthHandler(event)} value={inputTextState.text}/> 
+    <StyleRoot>
+      <div className="App">
+        <h1>Uhan's React App</h1>
+        <div>
+          <input onChange={() => textLengthHandler(event)} value={inputTextState.text}/> 
+        </div>
+        <p>Input field Length: {textLengthState.textLength}</p>
+        <Validation textLength={textLengthState.textLength}/>
+        <Characters text={inputTextState.text} deleteChar={handleCharDel}/>
+        <button
+          style={style}
+          onClick={() => togglePersonsHandler()}
+        >
+          Toggle Persons
+        </button>
+        {persons()}
       </div>
-      <p>Input field Length: {textLengthState.textLength}</p>
-      <Validation textLength={textLengthState.textLength}/>
-      <Characters text={inputTextState.text} deleteChar={handleCharDel}/>
-      <button
-        style={style}
-        onClick={() => togglePersonsHandler()}
-      >
-        Toggle Persons
-      </button>
-      {persons()}
-      </div>
+    </StyleRoot>
   );
   // return React.createElement("div", { className: "App" }, React.createElement("h1", null, "Input Field"), React.createElement("input"))
 }
 
-export default app;
+export default Radium(app);
