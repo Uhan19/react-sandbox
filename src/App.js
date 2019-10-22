@@ -16,7 +16,8 @@ const app = props => {
   // the first elemen tis the state, and the second is a function that allows
   // us to manipulate the state
   const style = {
-    backgroundColor: "white",
+    backgroundColor: "green",
+    color: "white",
     font: "inherit",
     border: "1px solid blue",
     padding: "8px",
@@ -105,8 +106,10 @@ const app = props => {
   }
 
   const persons = () => {
-    return showPersonState.showPerson && (
-      <div>
+    if (showPersonState.showPerson) {
+      style.backgroundColor = "red";
+      return (
+        <div>
         {
           personState.persons.map((person, index) => {
             return (
@@ -120,7 +123,8 @@ const app = props => {
           })
         }
       </div>
-    )
+      )
+    }
   }
 
   return (
