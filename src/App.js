@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import './App.css';
-import Radium, { StyleRoot } from "radium";
+import classes from './App.module.css';
 import Person from "./Person/Person";
-import Characters from "./Characters/characters"
-import { Validation } from "./utils/validation";
+import Characters from "./Characters/characters";
+import Validation from "./Validation/validation";
 import {
   KINGA,
   YUEHAN,
@@ -16,18 +15,6 @@ const app = props => {
   // useState always returns an array with exactly two elements
   // the first elemen tis the state, and the second is a function that allows
   // us to manipulate the state
-  const style = {
-    backgroundColor: "green",
-    color: "white",
-    font: "inherit",
-    border: "1px solid blue",
-    padding: "8px",
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: "lightgreen",
-      color: "black"
-    }
-  }
 
   const [ personState, setPersonState ] = useState({
     persons: [
@@ -112,11 +99,6 @@ const app = props => {
 
   const persons = () => {
     if (showPersonState.showPerson) {
-      style.backgroundColor = "red";
-      style[":hover"] = {
-        backgroundColor: "salmon",
-        color: "black"
-      }
       return (
         <div>
         {
@@ -127,7 +109,7 @@ const app = props => {
                 onClick={() => deletePersonHandler(index)}
                 name={person.name}
                 age={person.age}
-                change={() => nameChangedHandler(event, index)}
+                change={(event) => nameChangedHandler(event, index)}
               />)
           })
         }
@@ -136,27 +118,31 @@ const app = props => {
     }
   }
 
+  let btnClass = "";
+  
+  if (showPersonState.showPerson) {
+    btnClass = classes.Red;
+  }
+
   return (
-    <StyleRoot>
-      <div className="App">
-        <h1>Uhan's React App</h1>
-        <div>
-          <input onChange={() => textLengthHandler(event)} value={inputTextState.text}/> 
-        </div>
-        <p>Input field Length: {textLengthState.textLength}</p>
-        <Validation textLength={textLengthState.textLength}/>
-        <Characters text={inputTextState.text} deleteChar={handleCharDel}/>
-        <button
-          style={style}
-          onClick={() => togglePersonsHandler()}
-        >
-          Toggle Persons
-        </button>
-        {persons()}
+    <div className={classes.App}>
+      <h1>Uhan's React App</h1>
+      <div>
+        <input onChange={(event) => textLengthHandler(event)} value={inputTextState.text}/> 
       </div>
-    </StyleRoot>
+      <p>Input field Length: {textLengthState.textLength}</p>
+      <Validation textLength={textLengthState.textLength}/>
+      <Characters text={inputTextState.text} deleteChar={handleCharDel}/>
+      <button
+        className={btnClass}
+        onClick={() => togglePersonsHandler()}
+      >
+        Toggle Persons
+      </button>
+      {persons()}
+    </div>
   );
   // return React.createElement("div", { className: "App" }, React.createElement("h1", null, "Input Field"), React.createElement("input"))
 }
 
-export default Radium(app);
+export default app;
