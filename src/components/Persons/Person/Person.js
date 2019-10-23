@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Person.module.css";
-import { KINGA } from "../utils/enums";
+import { KINGA } from "../../../utils/enums";
 
 const person = (props) => {
 	const { name, age, onClick, change } = props

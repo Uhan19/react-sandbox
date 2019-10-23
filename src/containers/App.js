@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import classes from './App.module.css';
-import Person from "./Person/Person";
-import Characters from "./Characters/characters";
-import Validation from "./Validation/validation";
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
+import Persons from "../components/Persons/persons"
+import Characters from "../components/Characters/characters";
+import Validation from "../components/Validation/validation";
 import {
   KINGA,
   YUEHAN,
   person1,
   person2,
   person3
- } from "./utils/enums"
+ } from "../utils/enums"
 
 const app = props => {
   // useState always returns an array with exactly two elements
@@ -98,28 +97,6 @@ const app = props => {
     }
   }
 
-  const persons = () => {
-    if (showPersonState.showPerson) {
-      return (
-        <div>
-        {
-          personState.persons.map((person, index) => {
-            return (
-              <ErrorBoundary key={index}>
-                <Person
-                  onClick={() => deletePersonHandler(index)}
-                  name={person.name}
-                  age={person.age}
-                  change={(event) => nameChangedHandler(event, index)}
-                />
-              </ErrorBoundary>)
-          })
-        }
-      </div>
-      )
-    }
-  }
-
   let btnClass = "";
   
   if (showPersonState.showPerson) {
@@ -141,7 +118,12 @@ const app = props => {
       >
         Toggle Persons
       </button>
-      {persons()}
+      <Persons 
+        showPerson={showPersonState.showPerson}
+        personList={personState.persons}
+        deletePersonHandler={deletePersonHandler}
+        nameChangedHandler={nameChangedHandler}
+      />
     </div>
   );
   // return React.createElement("div", { className: "App" }, React.createElement("h1", null, "Input Field"), React.createElement("input"))
