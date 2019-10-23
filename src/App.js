@@ -3,6 +3,7 @@ import classes from './App.module.css';
 import Person from "./Person/Person";
 import Characters from "./Characters/characters";
 import Validation from "./Validation/validation";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 import {
   KINGA,
   YUEHAN,
@@ -104,13 +105,14 @@ const app = props => {
         {
           personState.persons.map((person, index) => {
             return (
-              <Person
-                key={index}
-                onClick={() => deletePersonHandler(index)}
-                name={person.name}
-                age={person.age}
-                change={(event) => nameChangedHandler(event, index)}
-              />)
+              <ErrorBoundary key={index}>
+                <Person
+                  onClick={() => deletePersonHandler(index)}
+                  name={person.name}
+                  age={person.age}
+                  change={(event) => nameChangedHandler(event, index)}
+                />
+              </ErrorBoundary>)
           })
         }
       </div>
