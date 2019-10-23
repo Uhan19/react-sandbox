@@ -25,36 +25,11 @@ const app = props => {
     ]
   });
 
-  // eslint-disable-next-line
-  const [ touchedState, setTouchedState ] = useState({ touched: true })
-
   const [ showPersonState, setShowPersonState ] = useState({ showPerson: false })
 
   const [ textLengthState, setTextLengthState ] = useState({ textLength: 0 })
 
   const [ inputTextState, setInputTextState ] = useState({ text: "" });
-
-  // const switchNameHandler = (newName) => {
-  //   if (touchedState) {
-  //     setPersonState({
-  //       persons: [
-  //         { name: YUEHAN, age: 26 },
-  //         { name: newName, age: 29 },
-  //         { name: KINGA, age: 24}
-  //       ]
-  //     })
-  //     setTouchedState({ touched: false })
-  //   } else {
-  //     setPersonState({
-  //       persons: [
-  //         { name: person1, age: 26 },
-  //         { name: person2, age: 29 },
-  //         { name: person3, age: 26}
-  //       ]
-  //     })
-  //     setTouchedState({ touched: true })
-  //   }
-  // }
 
   return (
     <div className={classes.App}>
