@@ -9,6 +9,7 @@
   border: 1px solid blue;
   padding: 8px;
   cursor: pointer;
+  margin: 5px 5px;
 }
 
 .App button:hover {

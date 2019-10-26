@@ -4,6 +4,7 @@ import Cockpit from "../components/Cockpit/Cockpit"
 import Persons from "../components/Persons/persons"
 import Characters from "../components/Characters/characters";
 import Validation from "../components/Validation/validation";
+import Timer from "../components/Timer/timer";
 import {
   // KINGA,
   // YUEHAN,
@@ -31,6 +32,12 @@ const app = props => {
 
   const [ inputTextState, setInputTextState ] = useState({ text: "" });
 
+  const [ showTimer, setShowTimer ] = useState({ showTimer: false });
+
+  const [ time, setTime ] = useState({ time: 0 });
+
+	const [ cycle, setCycle ] = useState({ cycle: 1})
+
   return (
     <div className={classes.App}>
       <Cockpit
@@ -40,6 +47,8 @@ const app = props => {
         text={inputTextState.text}
         setInputTextState={setInputTextState}
         setTextLengthState={setTextLengthState}
+        showTimer={showTimer.showTimer}
+        setShowTimer={setShowTimer}
       />
       <Validation textLength={textLengthState.textLength}/>
       <Characters 
@@ -51,6 +60,13 @@ const app = props => {
         showPerson={showPersonState.showPerson}
         personList={personState.persons}
         setPersonState={setPersonState}
+      />
+      <Timer
+        showTimer={showTimer.showTimer}
+        time={time.time}
+        setTime={setTime}
+        cycle={cycle.cycle}
+        setCycle={setCycle}
       />
     </div>
   );
