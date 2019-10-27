@@ -40,7 +40,7 @@ const cockpit = props => {
 
 	return(
 		<div>
-			<h1>Uhan's React App</h1>
+			<h1 className={classes.header}>HIIT Trainer</h1>
 			<div>
 					<input onChange={(event) => textLengthHandler(event)} value={text}/> 
 			</div>

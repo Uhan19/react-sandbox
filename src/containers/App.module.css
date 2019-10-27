@@ -2,18 +2,23 @@
   text-align: center;
 }
 
+.header {
+  color: white;
+}
+
 .App button {
-  background-color: green;
+  background-color: #483D8B;
   color: white;
   font: inherit;
-  border: 1px solid blue;
+  border: 1px solid #483D8B;
+  border-radius: 15px;
   padding: 8px;
   cursor: pointer;
   margin: 5px 5px;
 }
 
 .App button:hover {
-  background-color: lightgreen;
+  background-color: #9370DB;
   color: black;
 }
 
